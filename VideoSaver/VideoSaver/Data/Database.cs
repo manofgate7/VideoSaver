@@ -16,10 +16,20 @@ namespace VideoSaver.Data
 
 		public List<Video> GetVideos()
 		{
-			//SqlMapper.AddTypeHandler(new DapperSqlDateOnlyTypeHandler());
-
-
 			return _dbConnection.Query<Video>(SqlStatements.GetAllVideos).ToList();
+		}
+
+		public Video InsertVideo(Video video)
+		{
+
+			_dbConnection.ExecuteAsync(SqlStatements.InsertVideo, video).Wait();
+			return video;
+		}
+
+		public Video UpdateVideo(Video video)
+		{
+			_dbConnection.ExecuteAsync(SqlStatements.UpdateVideo, video).Wait();
+			return video;
 		}
 	}
 }

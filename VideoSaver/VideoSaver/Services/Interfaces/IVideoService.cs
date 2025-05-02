@@ -6,5 +6,6 @@ namespace VideoSaver.Services.Interfaces
 	{
 		List<Video> GetAllVideos();
 		Video GetVideoById(int id);
+		Video SaveVideo(Video video);
 	}
 }
