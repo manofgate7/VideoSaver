@@ -19,17 +19,22 @@ namespace VideoSaver.Data
 			return _dbConnection.Query<Video>(SqlStatements.GetAllVideos).ToList();
 		}
 
+		internal Video GetVideoById(int Id)
+		{
+			return _dbConnection.QuerySingle<Video>(SqlStatements.GetVideoById, new { VideoId = Id });
+		}
+
 		public Video InsertVideo(Video video)
 		{
 
-			_dbConnection.ExecuteAsync(SqlStatements.InsertVideo, video).Wait();
-			return video;
+			video.VideoId = _dbConnection.QuerySingle<int>(SqlStatements.InsertVideo, video);
+			return GetVideoById(video.VideoId);
 		}
 
 		public Video UpdateVideo(Video video)
 		{
 			_dbConnection.ExecuteAsync(SqlStatements.UpdateVideo, video).Wait();
-			return video;
+			return GetVideoById(video.VideoId);
 		}
 	}
 }
